@@ -1,0 +1,69 @@
+name: CI/CD Deploy to Oracle Cloud Container Registry & Server
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 레포 Checkout
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 2. JDK 세팅 (Spring Boot 빌드용)
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
+
+      # 3. Oracle Cloud Container Registry(OCIR) 로그인 (OCI CLI 이용)
+      - name: Login to OCIR
+        uses: docker/login-action@v3
+        with:
+          registry: yny.ocir.io
+          username: ${{ secrets.OCI_USERNAME }}
+          password: ${{ secrets.OCI_TOKEN }}
+
+      - name: Build and push Docker image with cache
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: etc/Dockerfile-backend
+          push: true
+          tags: ${{ secrets.OCI_REGISTRY_URL }}/getz-backend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
+            MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }}
+            MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+            REGION=${{secrets.REGION}}
+            NAMESPACE=${{secrets.NAMESPACE}}
+            BUCKETNAME=${{secrets.BUCKETNAME}}
+            COMPARTMENTID=${{secrets.COMPARTMENTID}}
+          platforms: linux/arm64
+
+      - name: Create .env file
+        run: |
+          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env
+          echo "MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }}" >> .env
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+          echo "REGION=${{secrets.REGION}}" >> .env
+          echo "NAMESPACE=${{secrets.NAMESPACE}}" >> .env
+          echo "BUCKETNAME=${{secrets.BUCKETNAME}}" >> .env
+          echo "COMPARTMENTID=${{secrets.COMPARTMENTID}}" >> .env
+
+      - name: 빌드된 파일 전송하기
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: .env
+          target: /home/ubuntu

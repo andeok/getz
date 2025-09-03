@@ -1,35 +1,8 @@
-spring:
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/test
-    username: sa
-    driver-class-name: org.h2.Driver
-
-  jpa:
-    open-in-view: false
-    show-sql: true
-    hibernate:
-      ddl-auto: create
-
-
-
-oauth2:
-  client:
-    providers:
-      kakao:
-        admin-key: adminkey
-        user-info-uri: https://kapi.kakao.com/v2/user/me
-        user-unlink-uri: https://kapi.kakao.com/v1/user/unlink
 cors:
   allow-origins:
     - http://localhost:5173
-    - https://auction.jjust.kr
-
-jwt:
-  secret-key: thisissecretkeyisandeokgyun88012712859123jnqweasdpqwekjqwe
-  accessToken-expiration-millis: 1_800_000
-  refrestToken-expiration-mills: 1_209_600_000
-
-domain: localhost
-sameSite: None
-access-token-path: /
-refresh-token-path: /
+    - https://getz.kr
+    - https://www.getz.kr
+spring:
+  profiles:
+    active: local
