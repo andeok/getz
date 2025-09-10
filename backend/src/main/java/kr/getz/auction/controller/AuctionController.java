@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.getz.auction.dto.request.AuctionWithProductRequest;
 import kr.getz.auction.dto.request.BidRequest;
-import kr.getz.auction.dto.request.CreateAuctionRequest;
 import kr.getz.auction.dto.response.AuctionResponse;
 import kr.getz.auction.dto.response.AuctionsResponses;
 import kr.getz.auction.service.AuctionService;
@@ -51,11 +50,11 @@ public class AuctionController {
 	}
 
 	// 입찰
-	@PostMapping("/{id}/bids")
+	@PostMapping("/{auctionId}/bids")
 	public ResponseEntity<AuctionResponse> placeBid(@UserPrincipal User user,
-		@PathVariable long id,
+		@PathVariable long auctionId,
 		@RequestBody BidRequest request){
 
-		return ResponseEntity.ok(auctionService.placeBid(user, request, id));
+		return ResponseEntity.ok(auctionService.placeBid(user, request, auctionId));
 	}
 }

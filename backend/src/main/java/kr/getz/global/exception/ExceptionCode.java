@@ -16,15 +16,12 @@ public enum ExceptionCode {
 	OPTION_DUPLICATED(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "중복된 옵션이 존재합니다."),
 
 	// Bid
-	BID_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "카테고리 ID가 존재하지 않습니다"),
-	BID_PRICE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.QUESTION_ERROR,
-		"입찰 금액이 잘못됐습니다."),
-	BID_USER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.CHECKLIST_SERVER_ERROR,
-		"연속 입찰을 할 수 없습니다."),
-	QUESTION_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "잘못된 질문 ID입니다."),
-	QUESTION_DUPLICATED(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "중복된 질문이 존재합니다."),
-	QUESTION_DIFFERENT(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "수정할 질문 목록이 기존의 질문 목록과 동일하지 않습니다."),
-	QUESTION_NOT_OWNED_BY_USER(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "유저의 질문이 아닙니다."),
+	BID_NOT_FOUND(HttpStatus.NOT_FOUND, ClientExceptionCode.BID_ERROR, "입찰이 존재하지 않습니다"),
+
+	BID_PRICE_ERROR(HttpStatus.BAD_REQUEST, ClientExceptionCode.BID_ERROR, "입찰 금액이 잘못됐습니다."),
+
+	BID_DUPLICATE_ERROR(HttpStatus.CONFLICT, ClientExceptionCode.BID_ERROR, "연속 입찰을 할 수 없습니다."),
+	BID_TIME_ERROR(HttpStatus.BAD_REQUEST, ClientExceptionCode.BID_ERROR, "경매 에러"),
 
 	// User
 	USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, ClientExceptionCode.USER_NOT_FOUND, "유저가 존재하지 않습니다."),
@@ -48,9 +45,9 @@ public enum ExceptionCode {
 	ANSWER_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "답변이 유효하지 않습니다."),
 
 	// Auction
-	AUCTION_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_NOT_FOUND, "경매가 존재하지 않습니다."),
-	AUCTION_NOT_OWNED_BY_USER(HttpStatus.UNAUTHORIZED, ClientExceptionCode.UNAUTH_ERROR, "유저의 체크리스트가 아닙니다."),
-	
+	AUCTION_NOT_FOUND(HttpStatus.NOT_FOUND, ClientExceptionCode.AUCTION_NOT_FOUND, "경매가 존재하지 않습니다."),
+	AUCTION_NOT_OWNED_BY_USER(HttpStatus.FORBIDDEN, ClientExceptionCode.UNAUTH_ERROR, "유저의 경매가 아닙니다."),
+
 	// CustomChecklist
 	CUSTOM_CHECKLIST_QUESTION_EMPTY(HttpStatus.BAD_REQUEST, ClientExceptionCode.CUSTOM_ERROR, "커스텀 질문 개수가 유효하지 않습니다."),
 	CUSTOM_CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CUSTOM_ERROR, "커스텀 질문이 존재하지 않습니다."),
@@ -124,9 +121,8 @@ public enum ExceptionCode {
 	FILE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.FILE_ERROR, "해당 파일이 존재하지 않습니다."),
 
 	// Image
-	IMAGE_OPTIMIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.IMAGE_ERROR, "이미지 최적화 중 오류가 발생하였습니다."),
+	IMAGE_OPTIMIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.IMAGE_ERROR, "이미지 최적화 중 오류가 발생하였습니다.");
 
-;
 	private final HttpStatus httpStatus;
 	private final ClientExceptionCode clientExceptionCode;
 	private final String message;

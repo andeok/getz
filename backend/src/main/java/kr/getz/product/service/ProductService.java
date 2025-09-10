@@ -14,7 +14,6 @@ public class ProductService {
 	private final ProductRepository productRepository;
 
 	public long createProduct(User user, CreateAuctionRequest request) {
-
 		return 0;
 	}
 }

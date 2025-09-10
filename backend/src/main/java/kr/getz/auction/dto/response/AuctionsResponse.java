@@ -12,15 +12,15 @@ public record AuctionsResponse(
 	String sellerNickname,
 	int startPrice,
 	int currentPrice,
-	int endPrice,
-	int bidCount
+	Integer endPrice,
+	long bidCount
 ) {
 
 	public static AuctionsResponse from(Auction auction) {
 		return new AuctionsResponse(
 			auction.getStartTime(),
 			auction.getEndTime(),
-			auction.getProduct().getTitle(),
+			auction.getTitle(),
 			auction.getProduct().getUser().getId(),
 			auction.getProduct().getUser().getNickname(),
 			auction.getStartPrice(),

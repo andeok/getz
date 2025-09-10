@@ -46,8 +46,7 @@ public class AuctionService {
 	public AuctionsResponses getAuctionList() {
 		
 		// TODO : 시작시간이 얼마 남지 않은 순서로 정렬, 추후 필터 정렬로 수정하기
-		List<AuctionsResponse> response = auctionRepository.findAllWithProductAndUser().stream()
-			.map(AuctionsResponse::from)
+		List<AuctionsResponse> response = auctionRepository.findAllAsAuctionsResponseWithBidCount().stream()
 			.sorted(Comparator.comparing(AuctionsResponse::startTime))
 			.toList();
 
@@ -56,31 +55,22 @@ public class AuctionService {
 
 	@Transactional(readOnly = true)
 	public AuctionResponse getAuction(long id) {
-		Auction auction = auctionRepository.findByProductAndUser(id)
+		Auction auction = auctionRepository.findById(id)
 			.orElseThrow(() -> new AuctionException(ExceptionCode.AUCTION_NOT_FOUND));
 
 		return AuctionResponse.from(auction);
 	}
 
 	@Transactional
-	public AuctionResponse placeBid(User user, BidRequest request, long id) {
-		Auction auction = auctionRepository.findByProductAndUser(id)
+	public AuctionResponse placeBid(User user, BidRequest request, long auctionId) {
+		Auction auction = auctionRepository.findById(auctionId)
 			.orElseThrow(() -> new AuctionException(ExceptionCode.AUCTION_NOT_FOUND));
 
-		// TODO : 입찰 조건 검증 하기(현재가보다 낮은지, 경매 상태, 2번 연속 입찰인지 등등...)
-		validateBidPrice(user, auction, request);
-
 		Bid newBid = request.of(user, auction);
-		Bid savedBid = bidRepository.save(newBid);
 
-		auction.getBids().add(savedBid);
-
-		auction.updateCurrentPriceAndUser(request);
+		auction.addBid(newBid);
 
 		return AuctionResponse.from(auction);
 	}
 
-	private void validateBidPrice(User user, Auction auction, BidRequest request) {
-		auction.validateBidPrice(user, request);
-	}
 }

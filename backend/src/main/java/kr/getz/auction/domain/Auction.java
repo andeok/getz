@@ -16,12 +16,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import kr.getz.BaseEntity;
-import kr.getz.auction.dto.request.BidRequest;
 import kr.getz.bid.domain.Bid;
 import kr.getz.global.exception.AuctionException;
 import kr.getz.global.exception.ExceptionCode;
 import kr.getz.product.domain.Product;
-import kr.getz.user.domain.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,13 +46,14 @@ public class Auction extends BaseEntity {
 	private AuctionStatus status; // 경매 상태
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="product_id")
+	@JoinColumn(name = "product_id")
 	private Product product;
 
 	@OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Bid> bids = new ArrayList<>();
 
-	public Auction(String title, String description, int startPrice, int endPrice, LocalDateTime startTime, LocalDateTime endTime, int bidIncrement, Product product) {
+	public Auction(String title, String description, int startPrice, int endPrice, LocalDateTime startTime,
+		LocalDateTime endTime, int bidIncrement, Product product) {
 		this.title = title;
 		this.description = description;
 		this.startPrice = startPrice;
@@ -64,25 +63,32 @@ public class Auction extends BaseEntity {
 		this.endTime = endTime;
 		this.bidIncrement = bidIncrement;
 		this.product = product;
-		this.status = LocalDateTime.now().isAfter(startTime) ? AuctionStatus.ONGOING : AuctionStatus.SCHEDULED;
+		this.status = AuctionStatus.SCHEDULED;
 	}
 
 	public void addBid(Bid bid) {
+		validateBidWindow();
+		validateBidPrice(bid);
+
 		this.bids.add(bid);
 		bid.setAuction(this);
+
+		this.currentPrice = bid.getBidPrice();
 	}
 
-	public void validateBidPrice(User user, BidRequest request) {
-		if(this.currentPrice >= request.bidPrice()) {
+	private void validateBidPrice(Bid newBid) {
+		if (newBid.getBidPrice() <= this.currentPrice) {
 			throw new AuctionException(ExceptionCode.BID_PRICE_ERROR);
 		}
-
-		// if(this.highestBidder != null && this.highestBidder.getId().equals(user.getId())){
-		// 	throw new AuctionException(ExceptionCode.BID_USER_ERROR);
-		// }
+		if (newBid.getBidPrice() - this.currentPrice < this.bidIncrement) {
+			throw new AuctionException(ExceptionCode.BID_PRICE_ERROR);
+		}
 	}
 
-	public void updateCurrentPriceAndUser(BidRequest request) {
-		this.currentPrice = request.bidPrice();
+	private void validateBidWindow() {
+		LocalDateTime now = LocalDateTime.now();
+		if (now.isBefore(this.startTime) || !now.isBefore(this.endTime) || this.status != AuctionStatus.ONGOING) {
+			throw new AuctionException(ExceptionCode.BID_TIME_ERROR);
+		}
 	}
 }

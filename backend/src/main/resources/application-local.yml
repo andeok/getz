@@ -4,11 +4,16 @@ spring:
     username: sa
     driver-class-name: org.h2.Driver
 
+  sql:
+    init:
+      mode: always
+
   jpa:
     open-in-view: false
     show-sql: true
     hibernate:
       ddl-auto: create
+    defer-datasource-initialization: true
 
 jwt:
   secret-key: thisissecretkeyisandeokgyun88012712859123jnqweasdpqwekjqwe
