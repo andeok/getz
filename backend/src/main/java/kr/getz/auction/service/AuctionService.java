@@ -1,5 +1,6 @@
 package kr.getz.auction.service;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -43,8 +44,11 @@ public class AuctionService {
 
 	@Transactional(readOnly = true)
 	public AuctionsResponses getAuctionList() {
+		
+		// TODO : 시작시간이 얼마 남지 않은 순서로 정렬, 추후 필터 정렬로 수정하기
 		List<AuctionsResponse> response = auctionRepository.findAllWithProductAndUser().stream()
 			.map(AuctionsResponse::from)
+			.sorted(Comparator.comparing(AuctionsResponse::startTime))
 			.toList();
 
 		return new AuctionsResponses(response);
