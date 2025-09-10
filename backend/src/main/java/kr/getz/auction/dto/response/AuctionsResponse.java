@@ -8,11 +8,12 @@ public record AuctionsResponse(
 	LocalDateTime startTime,
 	LocalDateTime endTime,
 	String title,
+	long sellerId,
 	String sellerNickname,
 	int startPrice,
 	int currentPrice,
-	int endPrice
-
+	int endPrice,
+	int bidCount
 ) {
 
 	public static AuctionsResponse from(Auction auction) {
@@ -20,10 +21,12 @@ public record AuctionsResponse(
 			auction.getStartTime(),
 			auction.getEndTime(),
 			auction.getProduct().getTitle(),
+			auction.getProduct().getUser().getId(),
 			auction.getProduct().getUser().getNickname(),
 			auction.getStartPrice(),
 			auction.getCurrentPrice(),
-			auction.getEndPrice()
+			auction.getEndPrice(),
+			auction.getBids().size()
 		);
 
 	}
