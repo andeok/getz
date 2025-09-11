@@ -14,7 +14,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
 
 	@Query("""
 		SELECT new kr.getz.auction.dto.response.AuctionsResponse(
-		  a.startTime, a.endTime, a.title,
+		  a.id, a.startTime, a.endTime, a.title,
 		  p.user.id, p.user.nickname,
 		  a.startPrice, a.currentPrice, a.endPrice,
 		  COUNT(b)

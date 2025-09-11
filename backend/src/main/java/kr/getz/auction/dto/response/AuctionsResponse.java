@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import kr.getz.auction.domain.Auction;
 
 public record AuctionsResponse(
+	long auctionId,
 	LocalDateTime startTime,
 	LocalDateTime endTime,
 	String title,
@@ -18,6 +19,7 @@ public record AuctionsResponse(
 
 	public static AuctionsResponse from(Auction auction) {
 		return new AuctionsResponse(
+			auction.getId(),
 			auction.getStartTime(),
 			auction.getEndTime(),
 			auction.getTitle(),
