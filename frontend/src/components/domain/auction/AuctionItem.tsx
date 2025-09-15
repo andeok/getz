@@ -2,27 +2,27 @@ import { Calendar, Clock, Heart } from 'lucide-react';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback.tsx';
 
 interface Auction {
-  id: number;
+  id: string;
   image: string;
   title: string;
-  startTime: string;
-  endTime: string;
+  startTime?: string;
+  endTime?: string;
   sellerId: number;
   sellerNickname: string;
   startPrice: number;
   currentPrice: number;
-  endPrice: number;
+  endPrice?: number;
   bidCount: number;
   likeCount: number;
 
-  status: 'active' | 'scheduled';
+  status?: string;
   timeLeft: string;
   isLiked: boolean;
 }
 
 interface AuctionItemProps {
   auction: Auction;
-  onClick: (id: number) => void;
+  onClick: (id: string) => void;
 }
 
 export function AuctionItem({ auction, onClick }: AuctionItemProps) {
