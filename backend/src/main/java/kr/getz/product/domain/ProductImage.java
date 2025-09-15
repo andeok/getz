@@ -20,6 +20,7 @@ public class ProductImage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+
 	private String imageUrl;
 
 	@ManyToOne(fetch = FetchType.LAZY)

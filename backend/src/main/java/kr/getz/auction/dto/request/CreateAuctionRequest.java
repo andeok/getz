@@ -7,17 +7,15 @@ import kr.getz.product.domain.Product;
 import kr.getz.user.domain.User;
 
 public record CreateAuctionRequest(
-	String title,
-	String description,
 	int startPrice,
-	int endPrice,
+	int buyNowPrice,
 	LocalDateTime startTime,
 	LocalDateTime endTime,
 	int bidIncrement
 ) {
 
 	public Auction toAuction(Product product) {
-		return new Auction(title, description, startPrice, endPrice, startTime, endTime, bidIncrement, product);
+		return new Auction(startPrice, buyNowPrice, startTime, endTime, bidIncrement, product);
 	}
 
 }
