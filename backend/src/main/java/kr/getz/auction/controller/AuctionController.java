@@ -3,6 +3,9 @@ package kr.getz.auction.controller;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.getz.auction.dto.request.AuctionWithProductRequest;
 import kr.getz.auction.dto.request.BidRequest;
 import kr.getz.auction.dto.response.AuctionResponse;
-import kr.getz.auction.dto.response.AuctionsResponses;
+import kr.getz.auction.dto.response.AuctionsResponse;
 import kr.getz.auction.service.AuctionService;
 import kr.getz.auth.config.UserPrincipal;
 import kr.getz.user.domain.User;
@@ -45,9 +48,10 @@ public class AuctionController {
 
 	// 경매 조회(목록)
 	@GetMapping
-	public ResponseEntity<AuctionsResponses> getAuctionList() {
-
-		return ResponseEntity.ok(auctionService.getAuctionList());
+	public ResponseEntity<Page<AuctionsResponse>> getAuctionList(
+		@PageableDefault(size = 25, sort = "startTime") Pageable pageable
+	) {
+		return ResponseEntity.ok(auctionService.getAuctionList(pageable));
 	}
 
 	// 경매 조회(상세)

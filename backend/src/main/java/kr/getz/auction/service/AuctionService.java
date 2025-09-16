@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,15 +64,9 @@ public class AuctionService {
 	}
 
 	@Transactional(readOnly = true)
-	public AuctionsResponses getAuctionList() {
-
-		// TODO : 시작시간이 얼마 남지 않은 순서로 정렬, 추후 필터 정렬로 수정하기
-		List<AuctionsResponse> response = auctionRepository.findAll().stream()
-			.map(AuctionsResponse::from)
-			.sorted(Comparator.comparing(AuctionsResponse::startTime))
-			.toList();
-
-		return new AuctionsResponses(response);
+	public Page<AuctionsResponse> getAuctionList(Pageable pageable) {
+		return auctionRepository.findAll(pageable)
+			.map(AuctionsResponse::from);
 	}
 
 	@Transactional(readOnly = true)
