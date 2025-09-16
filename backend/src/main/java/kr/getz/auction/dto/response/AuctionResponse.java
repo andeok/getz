@@ -25,7 +25,7 @@ public record AuctionResponse(
 			auction.getProduct().getUser().getNickname(),
 			auction.getStartPrice(),
 			auction.getCurrentPrice(),
-			auction.getEndPrice(),
+			auction.getFinalPrice(),
 			auction.getBids().stream()
 				.map(BidResponse::from)
 				.toList()

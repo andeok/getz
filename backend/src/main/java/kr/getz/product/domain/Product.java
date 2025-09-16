@@ -45,7 +45,7 @@ public class Product extends BaseEntity {
 	public Product(String title, String description, User user) {
 		this.title = title;
 		this.description = description;
-		this.status = ProductStatus.ON_AUCTION;
+		this.status = ProductStatus.AVAILABLE;
 		this.user = user;
 	}
 }

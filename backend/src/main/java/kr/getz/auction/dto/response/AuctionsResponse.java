@@ -13,8 +13,10 @@ public record AuctionsResponse(
 	String sellerNickname,
 	int startPrice,
 	int currentPrice,
-	Integer endPrice,
-	long bidCount
+	Integer buyNowPrice,
+	long bidCount,
+	int likeCount,
+	String imageUrl
 ) {
 
 	public static AuctionsResponse from(Auction auction) {
@@ -22,14 +24,19 @@ public record AuctionsResponse(
 			auction.getId(),
 			auction.getStartTime(),
 			auction.getEndTime(),
-			auction.getTitle(),
+			auction.getProduct().getTitle(),
 			auction.getProduct().getUser().getId(),
 			auction.getProduct().getUser().getNickname(),
 			auction.getStartPrice(),
 			auction.getCurrentPrice(),
-			auction.getEndPrice(),
-			auction.getBids().size()
+			auction.getBuyNowPrice(),
+			auction.getBidCount(),
+			0,// TODO : 좋아요 기능 현재 미구현
+			getImageUrl(auction)
 		);
+	}
 
+	public static String  getImageUrl(Auction auction) {
+		return auction.getProduct().getProductImages().size() > 0 ? auction.getProduct().getProductImages().get(0).getImageUrl() : null;
 	}
 }

@@ -44,9 +44,10 @@ public class AuctionService {
 
 	@Transactional(readOnly = true)
 	public AuctionsResponses getAuctionList() {
-		
+
 		// TODO : 시작시간이 얼마 남지 않은 순서로 정렬, 추후 필터 정렬로 수정하기
-		List<AuctionsResponse> response = auctionRepository.findAllAsAuctionsResponseWithBidCount().stream()
+		List<AuctionsResponse> response = auctionRepository.findAll().stream()
+			.map(AuctionsResponse::from)
 			.sorted(Comparator.comparing(AuctionsResponse::startTime))
 			.toList();
 
