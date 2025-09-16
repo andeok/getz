@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import kr.getz.auction.domain.Auction;
+import kr.getz.product.domain.ProductImage;
 
 public record AuctionResponse(
 	LocalDateTime startTime,
@@ -13,7 +14,7 @@ public record AuctionResponse(
 	String seller,
 	int startPrice,
 	int currentPrice,
-	int endPrice,
+	int buyNowPrice,
 	List<BidResponse> bidHistory
 ) {
 	public static AuctionResponse from(Auction auction) {
@@ -25,7 +26,7 @@ public record AuctionResponse(
 			auction.getProduct().getUser().getNickname(),
 			auction.getStartPrice(),
 			auction.getCurrentPrice(),
-			auction.getFinalPrice(),
+			auction.getBuyNowPrice(),
 			auction.getBids().stream()
 				.map(BidResponse::from)
 				.toList()
