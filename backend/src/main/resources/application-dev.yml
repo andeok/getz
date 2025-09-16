@@ -21,3 +21,10 @@ cookie:
   sameSite: None
   access-token-path: /
   refresh-token-path: /
+
+oci:
+  profile: INSTANCE_PRINCIPAL
+  region: ${REGION}
+  namespace: ${NAMESPACE}
+  bucketName: ${BUCKETNAME}
+  compartmentId: ${COMPARTMENTID}
