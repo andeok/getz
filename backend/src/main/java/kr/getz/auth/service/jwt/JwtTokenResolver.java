@@ -48,7 +48,7 @@ public class JwtTokenResolver {
 
 	private void validateTokenType(Claims claims, TokenType tokenType) {
 		String extractTokenType = claims.get(jwtTokenProperties.TOKEN_TYPE, String.class);
-		if(!extractTokenType.equals(tokenType.name())) {
+		if (!extractTokenType.equals(tokenType.name())) {
 			throw new AuctionException(ExceptionCode.AUTHENTICATION_TOKEN_INVALID);
 		}
 	}

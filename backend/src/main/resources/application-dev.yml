@@ -10,6 +10,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
@@ -21,3 +24,10 @@ cookie:
   sameSite: None
   access-token-path: /
   refresh-token-path: /
+
+oci:
+  profile: DEFAULT
+  region: ${REGION}
+  namespace: ${NAMESPACE}
+  bucketName: ${BUCKETNAME}
+  compartmentId: ${COMPARTMENTID}
