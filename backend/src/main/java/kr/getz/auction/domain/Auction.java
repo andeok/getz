@@ -46,7 +46,7 @@ public class Auction extends BaseEntity {
 	private Integer buyNowPrice;
 
 	private int bidIncrement; // 호가
-	private int bidCount;
+	private int bidCount = 0;
 
 	@Column(name = "start_at")
 	private LocalDateTime startTime;
@@ -68,7 +68,7 @@ public class Auction extends BaseEntity {
 	@OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Bid> bids = new ArrayList<>();
 
-	public Auction(int startPrice, int buyNowPrice, LocalDateTime startTime,
+	public Auction(int startPrice, Integer buyNowPrice, LocalDateTime startTime,
 		LocalDateTime endTime, int bidIncrement, Product product) {
 		this.startPrice = startPrice;
 		this.buyNowPrice = buyNowPrice;
@@ -90,6 +90,7 @@ public class Auction extends BaseEntity {
 		bid.setAuction(this);
 
 		this.currentPrice = bid.getBidPrice();
+		this.bidCount += 1;
 	}
 
 	private void validateBidPrice(Bid newBid) {

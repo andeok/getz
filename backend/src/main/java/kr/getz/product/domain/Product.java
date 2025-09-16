@@ -48,4 +48,8 @@ public class Product extends BaseEntity {
 		this.status = ProductStatus.AVAILABLE;
 		this.user = user;
 	}
+
+	public void addProductImage(ProductImage productImage) {
+		this.productImages.add(productImage);
+	}
 }
