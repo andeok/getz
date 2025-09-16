@@ -40,6 +40,13 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    implementation 'com.oracle.oci.sdk:oci-java-sdk-identity:3.73.0'
+    implementation 'com.oracle.oci.sdk:oci-java-sdk-common:3.73.0'
+    implementation 'com.oracle.oci.sdk:oci-java-sdk-objectstorage:3.73.0'
+    implementation 'com.oracle.oci.sdk:oci-java-sdk-common-httpclient:3.73.0'
+    implementation 'com.oracle.oci.sdk:oci-java-sdk-common-httpclient-choices:3.73.0'
+    implementation 'com.oracle.oci.sdk:oci-java-sdk-common-httpclient-jersey3:3.73.0'
+
     // jwt 생성 및 검증
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.6'

@@ -8,7 +8,7 @@ import kr.getz.user.domain.User;
 
 public record CreateAuctionRequest(
 	int startPrice,
-	int buyNowPrice,
+	Integer buyNowPrice,
 	LocalDateTime startTime,
 	LocalDateTime endTime,
 	int bidIncrement
