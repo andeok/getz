@@ -19,7 +19,6 @@ public abstract class BaseEntity {
 	@LastModifiedDate
 	private LocalDateTime modifiedAt;
 
-	private boolean deleted = false;
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
@@ -27,14 +26,6 @@ public abstract class BaseEntity {
 
 	public LocalDateTime getModifiedAt() {
 		return modifiedAt;
-	}
-
-	public void delete() {
-		this.deleted = true;
-	}
-
-	public boolean isDeleted() {
-		return deleted;
 	}
 
 }

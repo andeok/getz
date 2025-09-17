@@ -1,10 +1,14 @@
 package kr.getz.auction.service;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.getz.auction.domain.Auction;
 import kr.getz.auction.dto.request.AuctionWithProductRequest;
@@ -17,7 +21,9 @@ import kr.getz.bid.domain.Bid;
 import kr.getz.bid.repository.BidRepository;
 import kr.getz.global.exception.AuctionException;
 import kr.getz.global.exception.ExceptionCode;
+import kr.getz.global.oci.service.OciService;
 import kr.getz.product.domain.Product;
+import kr.getz.product.domain.ProductImage;
 import kr.getz.product.repository.ProductRepository;
 import kr.getz.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +35,7 @@ public class AuctionService {
 	private final AuctionRepository auctionRepository;
 	private final ProductRepository productRepository;
 	private final BidRepository bidRepository;
+	private final OciService ociService;
 
 	@Transactional
 	public long createAuction(User user, AuctionWithProductRequest request) {
@@ -36,6 +43,20 @@ public class AuctionService {
 		Product product = request.product().toProduct(user);
 		Product saveProduct = productRepository.save(product);
 
+		List<MultipartFile> images = request.product().images();
+
+		images.forEach(image -> {
+			try {
+				String s = ociService.uploadFile(image);
+				ProductImage productImage = new ProductImage(s, product);
+				product.addProductImage(productImage);
+			} catch (IOException e) {
+				throw new AuctionException(ExceptionCode.FILE_UPLOAD_ERROR);
+			}
+		});
+
+		// TODO : 실패 시 삭제 로직 추가 예정
+		
 		Auction auction = request.auction().toAuction(saveProduct);
 		Auction saveAuction = auctionRepository.save(auction);
 
@@ -43,14 +64,9 @@ public class AuctionService {
 	}
 
 	@Transactional(readOnly = true)
-	public AuctionsResponses getAuctionList() {
-		
-		// TODO : 시작시간이 얼마 남지 않은 순서로 정렬, 추후 필터 정렬로 수정하기
-		List<AuctionsResponse> response = auctionRepository.findAllAsAuctionsResponseWithBidCount().stream()
-			.sorted(Comparator.comparing(AuctionsResponse::startTime))
-			.toList();
-
-		return new AuctionsResponses(response);
+	public Page<AuctionsResponse> getAuctionList(Pageable pageable) {
+		return auctionRepository.findAll(pageable)
+			.map(AuctionsResponse::from);
 	}
 
 	@Transactional(readOnly = true)
@@ -72,5 +88,4 @@ public class AuctionService {
 
 		return AuctionResponse.from(auction);
 	}
-
 }

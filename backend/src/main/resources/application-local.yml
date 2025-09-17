@@ -15,6 +15,10 @@ spring:
       ddl-auto: create
     defer-datasource-initialization: true
 
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+
 jwt:
   secret-key: thisissecretkeyisandeokgyun88012712859123jnqweasdpqwekjqwe
   accessToken-expiration-millis: 1_800_000
@@ -25,3 +29,10 @@ cookie:
   sameSite: None
   access-token-path: /
   refresh-token-path: /
+
+oci:
+  profile: DEFAULT
+  region: ${REGION}
+  namespace: ${NAMESPACE}
+  bucketName: ${BUCKETNAME}
+  compartmentId: ${COMPARTMENTID}
