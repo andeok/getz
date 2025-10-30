@@ -1,0 +1,8 @@
+cors:
+  allow-origins:
+    - http://localhost:5173
+    - https://getz.kr
+    - https://www.getz.kr
+spring:
+  profiles:
+    active: local
