@@ -1,4 +1,7 @@
 spring:
+  application:
+    name: getz
+
   jpa:
     hibernate:
       ddl-auto: update
