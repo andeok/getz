@@ -1,4 +1,4 @@
-package kr.getz.auction;
+package kr.getz.fut;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

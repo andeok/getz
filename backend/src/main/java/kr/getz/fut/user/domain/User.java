@@ -1,4 +1,4 @@
-package kr.getz.auction.user.domain;
+package kr.getz.fut.user.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package kr.getz.auction;
+package kr.getz.fut;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

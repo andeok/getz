@@ -1,8 +1,8 @@
-package kr.getz.auction.user.repository;
+package kr.getz.fut.user.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import kr.getz.auction.user.domain.User;
+import kr.getz.fut.user.domain.User;
 
 public interface UsersRepository extends JpaRepository<User, Long> {
 }
