@@ -1,4 +1,4 @@
-package kr.getz.fut;
+package kr.getz.personal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package kr.getz.fut.global.config;
+package kr.getz.personal.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
