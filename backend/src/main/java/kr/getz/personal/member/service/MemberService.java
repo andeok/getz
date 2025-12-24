@@ -14,8 +14,4 @@ public class MemberService {
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	public Object signup(SignUpRequest request) {
-
-		return null;
-	}
 }

@@ -22,7 +22,7 @@ public class Member {
 	private String name;
 
 	@Builder
-	public Member(Long id, String email, String password, String name) {
+	public Member(String email, String password, String name) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
