@@ -1,4 +1,4 @@
-package kr.getz.fut;
+package kr.getz.personal;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
