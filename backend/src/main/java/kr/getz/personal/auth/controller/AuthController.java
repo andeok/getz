@@ -1,5 +1,6 @@
 package kr.getz.personal.auth.controller;
 
+import kr.getz.personal.auth.dto.request.LoginRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,13 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<Long> signUp(@RequestBody SignUpRequest request) {
 		return ResponseEntity.ok(authService.signup(request));
+	}
+
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+		// 로그인 로직 구현 예정
+		authService.login(request);
+		return ResponseEntity.ok().build();
 	}
 
 }
