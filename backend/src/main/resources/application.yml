@@ -17,3 +17,13 @@ spring:
     username: root
     password: getzpassword
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+jwt:
+  access:
+    secret: dksejrrbsdlqslekwpqkfdnjfrmqwhawpqkfkjdnfjqnxkrdlqslekdkwpqkf
+    # 15 minutes
+    expiration: 900000
+
+  refresh:
+    secret: rjfnwkqprlskdjqwpeiruwqprldksjfnwkqprlskdjqwpeiruwqprldksjf
+    expiration: 2592000000
