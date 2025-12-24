@@ -1,5 +1,6 @@
 package kr.getz.personal.auth.controller;
 
+import kr.getz.personal.auth.dto.request.LoginRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,14 +27,12 @@ public class AuthController {
 		return ResponseEntity.ok(authService.signup(request));
 	}
 
-	@GetMapping
-	public ResponseEntity<?> login() {
-		return ResponseEntity.ok(tokenProvider.createAccessToken(1L, "USER"));
-	}
 
-	@GetMapping("/{token}")
-	public ResponseEntity<?> test(@PathVariable String token) {
-		return ResponseEntity.ok(tokenProvider.validateAccessToken(token));
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+		// 로그인 로직 구현 예정
+		authService.login(request);
+		return ResponseEntity.ok().build();
 	}
 
 }
