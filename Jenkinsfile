@@ -31,6 +31,9 @@ pipeline {
 
         stage('Docker Build') {
             steps {
+
+                sh 'echo "--- build/libs 폴더 파일 목록 ---"'
+                sh 'ls -al build/libs'
                 // Dockerfile을 이용해 이미지 빌드
                 sh "docker build -t ${IMAGE_NAME}:latest ."
             }
