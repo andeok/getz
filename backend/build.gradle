@@ -42,7 +42,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
-    runtimeOnly 'org.springframework.boot:spring-boot-docker-compose'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
     // JWT
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
