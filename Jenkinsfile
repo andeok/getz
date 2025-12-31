@@ -55,7 +55,7 @@ pipeline {
                         --network web-net \
                         --restart unless-stopped \
                         -l "traefik.enable=true" \
-                        -l "traefik.http.routers.spring.rule=Host(`api.getz.kr`)" \
+                        -l "traefik.http.routers.spring.rule=Host(`getz.kr`) && PathPrefix(`/api`)" \
                         -l "traefik.http.routers.spring.entrypoints=websecure" \
                         -l "traefik.http.routers.spring.tls.certresolver=myresolver" \
                         ${IMAGE_NAME}:latest
