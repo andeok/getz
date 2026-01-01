@@ -42,12 +42,16 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
-    runtimeOnly 'org.springframework.boot:spring-boot-docker-compose'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
     // JWT
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+
+    // 모니터링
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
     // TEST
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
@@ -76,4 +80,8 @@ bootJar {
     from("${asciidoctor.outputDir}") {
         into 'static/docs'
     }
+}
+
+jar {
+    enabled = false
 }
