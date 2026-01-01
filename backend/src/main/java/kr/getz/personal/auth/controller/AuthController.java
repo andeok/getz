@@ -1,6 +1,7 @@
 package kr.getz.personal.auth.controller;
 
 import kr.getz.personal.auth.dto.request.LoginRequest;
+import kr.getz.personal.auth.dto.response.LoginResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
 	private final AuthService authService;
-	private final TokenProvider tokenProvider;
 
 	@PostMapping("/signup")
 	public ResponseEntity<Long> signUp(@RequestBody SignUpRequest request) {
@@ -29,10 +29,8 @@ public class AuthController {
 
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-		// 로그인 로직 구현 예정
-		authService.login(request);
-		return ResponseEntity.ok().build();
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+		return ResponseEntity.ok().body(authService.login(request));
 	}
 
 }
