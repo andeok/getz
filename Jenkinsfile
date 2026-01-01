@@ -64,12 +64,26 @@ pipeline {
         }
     }
 
-    post {
+post {
         success {
-            echo '배포 성공! 🎉'
+            script {
+                discordSend description: "✅ **배포 성공!**\n수고하셨습니다. 서버가 정상적으로 업데이트되었습니다.",
+                            footer: "Build #${env.BUILD_NUMBER}",
+                            link: env.BUILD_URL,
+                            result: currentBuild.currentResult,
+                            title: "${env.JOB_NAME} 빌드 성공",
+                            webhookURL: credentials('discord-webhook') // 아까 만든 ID 사용
+            }
         }
         failure {
-            echo '배포 실패... 로그를 확인하세요. 😭 '
+            script {
+                discordSend description: "🚨 **배포 실패...**\n로그를 확인하고 수정해주세요.",
+                            footer: "Build #${env.BUILD_NUMBER}",
+                            link: env.BUILD_URL,
+                            result: currentBuild.currentResult,
+                            title: "${env.JOB_NAME} 빌드 실패",
+                            webhookURL: credentials('discord-webhook')
+            }
         }
     }
 }

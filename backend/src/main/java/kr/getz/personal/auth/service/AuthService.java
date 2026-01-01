@@ -1,6 +1,11 @@
 package kr.getz.personal.auth.service;
 
+import java.net.http.HttpHeaders;
 import kr.getz.personal.auth.dto.request.LoginRequest;
+import kr.getz.personal.auth.dto.response.LoginResponse;
+import kr.getz.personal.global.jwt.TokenProvider;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +17,14 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TokenProvider tokenProvider;
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
     public Long signup(SignUpRequest request) {
@@ -32,7 +41,7 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public void login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
 
         Member member = memberRepository.findByEmail(request.email())
             .orElseThrow(() -> new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다."));
@@ -43,7 +52,12 @@ public class AuthService {
             throw new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다.");
         }
 
-        // TODO: jwt 토큰 발급 처리 예정
+        String accessToken = tokenProvider.createAccessToken(member.getId(),
+            member.getRole().name());
+        String refreshToken = tokenProvider.createRefreshToken(member.getId());
 
+        redisTemplate.opsForValue().set(String.valueOf(member.getId()), refreshToken);
+
+        return new LoginResponse(accessToken, refreshToken);
     }
 }
