@@ -14,7 +14,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // 깃허브에서 코드 가져오기
-                git branch: 'feat/getz-11',
+                git branch: 'develop',
                     credentialsId: 'github-token',
                     url: 'https://github.com/andeok/getz.git'
             }
