@@ -8,6 +8,8 @@ pipeline {
         CONTAINER_NAME = "getz-backend"
         // [수정필요] 사용할 포트 (Traefik과 연결된 내부 포트)
         APP_PORT = "8080"
+
+        DISCORD_URL = credentials('discord-webhook')
     }
 
     stages {
@@ -72,7 +74,7 @@ post {
                             link: env.BUILD_URL,
                             result: currentBuild.currentResult,
                             title: "${env.JOB_NAME} 빌드 성공",
-                            webhookURL: credentials('discord-webhook') // 아까 만든 ID 사용
+                            webhookURL: env.DISCORD_URL
             }
         }
         failure {
@@ -82,7 +84,7 @@ post {
                             link: env.BUILD_URL,
                             result: currentBuild.currentResult,
                             title: "${env.JOB_NAME} 빌드 실패",
-                            webhookURL: credentials('discord-webhook')
+                            webhookURL: env.DISCORD_URL
             }
         }
     }
