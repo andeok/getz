@@ -20,6 +20,7 @@ public enum ErrorCode {
     REFRESH_TOKEN_NOT_FOUND("refresh token을 찾을 수 없습니다."),
     REFRESH_TOKEN_INVALID("유효하지 않은 refresh token입니다."),
     REFRESH_TOKEN_SIGNATURE_INVALID("refresh token이 위조됐습니다."),
+    ID_PASSWORD_NOT_MATCH("이메일 또는 비밀번호가 올바르지 않습니다."),
 
     // 403 Forbidden
     FORBIDDEN("접근 권한이 없습니다."),
