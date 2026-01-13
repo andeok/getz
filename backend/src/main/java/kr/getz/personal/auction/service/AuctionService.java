@@ -1,5 +1,8 @@
 package kr.getz.personal.auction.service;
 
+import kr.getz.personal.auction.domain.Auction;
+import kr.getz.personal.auction.repository.AuctionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
