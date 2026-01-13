@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +29,10 @@ public class AuctionController {
     ) {
         Pageable pageable = PageRequest.of(0, size);
         return ResponseEntity.ok(auctionService.getAuctions(lastId, pageable));
+    }
+
+    @GetMapping("/{auctionId}")
+    public ResponseEntity<Auction> getAuction(@PathVariable Long auctionId) {
+        return ResponseEntity.ok(auctionService.getAuction(auctionId));
     }
 }
