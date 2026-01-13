@@ -1,8 +1,5 @@
 package kr.getz.personal.auction.service;
 
-import kr.getz.personal.auction.domain.Auction;
-import kr.getz.personal.auction.repository.AuctionRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -10,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.getz.personal.auction.domain.Auction;
 import kr.getz.personal.auction.repository.AuctionRepository;
+import kr.getz.personal.bid.dto.request.BidRequest;
 import kr.getz.personal.global.exception.ErrorCode;
 import kr.getz.personal.global.exception.custom.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +28,15 @@ public class AuctionService {
 
 	public Auction getAuction(Long auctionId) {
 		return auctionRepository.findById(auctionId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND));
+	}
+
+	@Transactional
+	public void placeBid(Long auctionId, BidRequest request) {
+		Auction auction = auctionRepository.findById(auctionId)
+			.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND));
+
+		Integer bidAmount = request.bidAmount();
+		auction.placeBid(bidAmount);
+
 	}
 }
