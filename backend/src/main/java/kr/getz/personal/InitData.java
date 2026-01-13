@@ -31,9 +31,9 @@ public class InitData implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		// if (memberRepository.count() > 0) {
-		// 	memberRepository.deleteAll();
-		// }
+		if (memberRepository.count() > 0) {
+			memberRepository.deleteAll();
+		}
 
 		List<Member> members = new ArrayList<>();
 
@@ -62,9 +62,9 @@ public class InitData implements CommandLineRunner {
 		memberRepository.saveAll(members);
 		log.info("✅ 회원 100명 생성 완료!");
 
-		// if (auctionRepository.count() > 0) {
-		// 	auctionRepository.deleteAll();
-		// }
+		if (auctionRepository.count() > 0) {
+			auctionRepository.deleteAll();
+		}
 
 		List<Auction> auctionList = new ArrayList<>();
 		SecureRandom random = new SecureRandom();

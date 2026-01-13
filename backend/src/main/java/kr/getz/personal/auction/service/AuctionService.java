@@ -31,5 +31,4 @@ public class AuctionService {
 	public Auction getAuction(Long auctionId) {
 		return auctionRepository.findById(auctionId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND));
 	}
-
 }
