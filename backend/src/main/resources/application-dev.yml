@@ -13,7 +13,7 @@ spring:
     show-sql: true
 
   datasource:
-    url: jdbc:mysql://localhost:3306/getz
+    url: jdbc:mysql://mysql:3306/getz
     username: root
     password: getzpassword
     driver-class-name: com.mysql.cj.jdbc.Driver

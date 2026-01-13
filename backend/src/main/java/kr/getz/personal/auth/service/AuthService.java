@@ -3,6 +3,9 @@ package kr.getz.personal.auth.service;
 import java.net.http.HttpHeaders;
 import kr.getz.personal.auth.dto.request.LoginRequest;
 import kr.getz.personal.auth.dto.response.LoginResponse;
+import kr.getz.personal.global.exception.ErrorCode;
+import kr.getz.personal.global.exception.custom.BadRequestException;
+import kr.getz.personal.global.exception.custom.UnauthorizedException;
 import kr.getz.personal.global.jwt.TokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,7 +33,7 @@ public class AuthService {
     public Long signup(SignUpRequest request) {
 
         if (memberRepository.existsByEmail(request.email())) {
-            throw new IllegalArgumentException("이미 가입 된 이메일입니다.");
+            throw new BadRequestException(ErrorCode.DUPLICATE_EMAIL);
         }
 
         String encodedPassword = passwordEncoder.encode(request.password());
@@ -49,11 +52,12 @@ public class AuthService {
         boolean matches = passwordEncoder.matches(request.password(), member.getPassword());
 
         if (!matches) {
-            throw new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다.");
+            throw new UnauthorizedException(ErrorCode.ID_PASSWORD_NOT_MATCH);
         }
 
         String accessToken = tokenProvider.createAccessToken(member.getId(),
             member.getRole().name());
+
         String refreshToken = tokenProvider.createRefreshToken(member.getId());
 
         redisTemplate.opsForValue().set(String.valueOf(member.getId()), refreshToken);
