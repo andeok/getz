@@ -14,4 +14,4 @@ COPY ${JAR_FILE} app.jar
 EXPOSE 8080
 
 # 5. 컨테이너 실행 시 수행할 명령어 (스프링 부트 실행)
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "/app/app.jar"]
