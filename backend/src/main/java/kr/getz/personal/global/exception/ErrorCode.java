@@ -10,7 +10,6 @@ public enum ErrorCode {
 
 	// 400 Bad Request
 	DUPLICATE_EMAIL("중복 된 이메일입니다."),
-	// 현재가격보다 낮거나 같습니다 에러 코드를 추천해줘.
 	LOWER_THAN_CURRENT_PRICE("입찰 금액이 현재 가격보다 낮거나 같습니다."),
 
 	// 401 Unauthorized
