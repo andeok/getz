@@ -6,12 +6,17 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.getz.personal.auction.domain.Auction;
 import kr.getz.personal.auction.service.AuctionService;
+import kr.getz.personal.bid.dto.request.BidRequest;
+import kr.getz.personal.global.auth.dto.MemberAuth;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,5 +40,13 @@ public class AuctionController {
 	@GetMapping("/{auctionId}")
 	public ResponseEntity<Auction> getAuction(@PathVariable Long auctionId) {
 		return ResponseEntity.ok(auctionService.getAuction(auctionId));
+	}
+
+	@PostMapping("/{auctionId}/bid")
+	public ResponseEntity<Void> placeBid(@PathVariable Long auctionId, @RequestBody BidRequest request,
+		@NonNull MemberAuth member) {
+
+		auctionService.placeBid(member, auctionId, request);
+		return ResponseEntity.ok().build();
 	}
 }

@@ -16,6 +16,8 @@ services:
     restart: always
     ports:
       - "3306:3306"
+    volumes:
+        - mysql-data:/var/lib/mysql
     environment:
         MYSQL_ROOT_PASSWORD: getzpassword
         MYSQL_DATABASE: getz
@@ -24,6 +26,7 @@ services:
 
 volumes:
   redis-data:
+  mysql-data:
 
 networks:
   app:

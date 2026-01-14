@@ -18,8 +18,7 @@ import kr.getz.personal.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
-@Profile("dev")
+// @Component
 @RequiredArgsConstructor
 @Slf4j
 public class InitData implements CommandLineRunner {

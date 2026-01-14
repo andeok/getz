@@ -11,6 +11,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        connection:
+          isolation: 2
 
   datasource:
     url: jdbc:mysql://localhost:3306/getz
