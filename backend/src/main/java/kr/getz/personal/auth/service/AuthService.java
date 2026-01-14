@@ -47,7 +47,7 @@ public class AuthService {
     public LoginResponse login(LoginRequest request) {
 
         Member member = memberRepository.findByEmail(request.email())
-            .orElseThrow(() -> new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다."));
+            .orElseThrow(() -> new UnauthorizedException(ErrorCode.ID_PASSWORD_NOT_MATCH));
 
         boolean matches = passwordEncoder.matches(request.password(), member.getPassword());
 

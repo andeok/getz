@@ -23,6 +23,7 @@ public enum ErrorCode {
 	REFRESH_TOKEN_INVALID("유효하지 않은 refresh token입니다."),
 	REFRESH_TOKEN_SIGNATURE_INVALID("refresh token이 위조됐습니다."),
 	ID_PASSWORD_NOT_MATCH("이메일 또는 비밀번호가 올바르지 않습니다."),
+	LOGIN_REQUIRED("로그인이 필요합니다."),
 
 	// 403 Forbidden
 	FORBIDDEN("접근 권한이 없습니다."),
@@ -35,7 +36,11 @@ public enum ErrorCode {
 	EMAIL_CONFLICT("중복 된 이메일입니다."),
 
 	// 500 Internal Server Error
-	INTERNAL_SERVER_ERROR("서버에서 예기치 못한 에러가 발생했습니다.");
+	INTERNAL_SERVER_ERROR("서버에서 예기치 못한 에러가 발생했습니다."),
+
+	AUCTION_NOT_PROCEEDING("경매가 진행 중이 아닙니다."),
+	CANNOT_BID_OWN_AUCTION("본인의 경매에는 입찰할 수 없습니다."),
+	LOCK_FAILURE("데이터베이스 락 획득에 실패했습니다.");
 
 	private final String message;
 

@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import kr.getz.personal.BaseTimeEntity;
 import kr.getz.personal.global.exception.ErrorCode;
 import kr.getz.personal.global.exception.custom.BadRequestException;
-import kr.getz.personal.global.exception.custom.IllegalArgumentException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,15 +56,7 @@ public class Auction extends BaseTimeEntity {
 	}
 
 	public void placeBid(Integer bidAmount) {
-		System.out.println("this.currentPrice : " + this.currentPrice);
-		if (this.currentPrice == null) {
-			this.currentPrice = bidAmount;
-			return;
-		}
-
-		if (this.currentPrice >= bidAmount) {
-			throw new BadRequestException(ErrorCode.LOWER_THAN_CURRENT_PRICE);
-		}
+		this.currentPrice = bidAmount;
 	}
 }
 

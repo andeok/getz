@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.getz.personal.auction.domain.Auction;
 import kr.getz.personal.auction.service.AuctionService;
 import kr.getz.personal.bid.dto.request.BidRequest;
+import kr.getz.personal.global.auth.dto.MemberAuth;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,8 +43,10 @@ public class AuctionController {
 	}
 
 	@PostMapping("/{auctionId}/bid")
-	public ResponseEntity<Void> placeBid(@PathVariable Long auctionId, @RequestBody BidRequest request) {
-		auctionService.placeBid(auctionId, request);
+	public ResponseEntity<Void> placeBid(@PathVariable Long auctionId, @RequestBody BidRequest request,
+		@NonNull MemberAuth member) {
+
+		auctionService.placeBid(member, auctionId, request);
 		return ResponseEntity.ok().build();
 	}
 }
