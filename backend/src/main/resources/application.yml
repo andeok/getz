@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: backend
+
+  data:
+    redis:
+        host: redis
+        port: 6379
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        connection:
+          isolation: 2
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/getz
+    username: root
+    password: getzpassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+jwt:
+  access:
+    secret: dksejrrbsdlqslekwpqkfdnjfrmqwhawpqkfkjdnfjqnxkrdlqslekdkwpqkf
+    # 15 minutes
+    expiration: 900000
+
+  refresh:
+    secret: rjfnwkqprlskdjqwpeiruwqprldksjfnwkqprlskdjqwpeiruwqprldksjf
+    expiration: 2592000000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+  endpoint:
+    health:
+      show-details: always
