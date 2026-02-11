@@ -40,8 +40,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
 
-		log.info("왔나");
-
 		String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 		if (token == null) {
 			sendUnauthorizedResponse(response, ErrorCode.LOGIN_REQUIRED);

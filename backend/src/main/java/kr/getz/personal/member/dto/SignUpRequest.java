@@ -1,6 +1,6 @@
 package kr.getz.personal.member.dto;
 
-import kr.getz.personal.member.domain.Member;
+import kr.getz.personal.member.entity.Member;
 
 public record SignUpRequest(
 	String email,

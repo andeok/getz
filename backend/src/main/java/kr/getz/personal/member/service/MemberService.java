@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.getz.personal.global.exception.ErrorCode;
 import kr.getz.personal.global.exception.custom.NotFoundException;
-import kr.getz.personal.member.domain.Member;
+import kr.getz.personal.member.entity.Member;
 import kr.getz.personal.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 

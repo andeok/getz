@@ -1,4 +1,4 @@
-package kr.getz.personal.member.domain;
+package kr.getz.personal.member.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
