@@ -33,6 +33,7 @@ public enum ErrorCode {
 
 	// 409 Conflict
 	EMAIL_CONFLICT("중복 된 이메일입니다."),
+	QUANTITY_EXCEED_STOCK("재고 수량을 초과했습니다."),
 
 	// 500 Internal Server Error
 	INTERNAL_SERVER_ERROR("서버에서 예기치 못한 에러가 발생했습니다."),
